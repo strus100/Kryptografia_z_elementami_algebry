@@ -1,0 +1,45 @@
+package modul1;
+
+import java.math.BigInteger;
+import java.util.Random;
+
+public class Arithmetic {
+    public BigInteger randZn(int k){
+        BigInteger maxLimit = new BigInteger(maxLimit(k));
+        BigInteger minLimit = new BigInteger(minLimit(k));
+        Random randNum = new Random();
+
+        int len = maxLimit.bitLength();
+        BigInteger res = new BigInteger(len, randNum);
+        if (res.compareTo(minLimit) < 0) {
+            //res = minLimit;
+                        res = res.add(minLimit);
+        }
+
+        if (res.compareTo(maxLimit) >= 0) {
+//            res = maxLimit;
+            res = randZn(k);
+        }
+        return res;
+    }
+
+    private String maxLimit(int k){
+        String max = "";
+        for (int i = 0; i < k; i++) {
+            max += 9;
+        }
+        return max;
+    }
+
+    private String minLimit(int k){
+        String min = "1";
+        for (int i = 0; i < k - 1  ; i++) {
+            min += 0;
+        }
+
+        if(k == 1 ){
+            return "0";
+        }
+        return min;
+    }
+}
