@@ -1,6 +1,6 @@
 package modul1;
 
-public class EucliideanAlgoritm {
+public class EucliideanAlgoritmSource {
     int r, a, q, b;
     int x, x1, x2;
     int y, y1, y2;
@@ -12,6 +12,8 @@ public class EucliideanAlgoritm {
 
         while (r != 0)
         {
+            System.out.println("a:" + a+", b:" + b+", q:" + q+", r:" + r+", x:"+  x+", x1:"+ x1+", x2:"+ x2+", y:"+ y+", y1:"+ y1+", y2:"+ y2+", nwd:"+ nwd+", " + "");
+
             a = b;
             b = r;
 
