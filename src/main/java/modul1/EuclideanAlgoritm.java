@@ -3,14 +3,18 @@ package modul1;
 import java.math.BigInteger;
 
 public class EuclideanAlgoritm {
+    BigInteger nwd_b, nwd_a;
     BigInteger a, b, q, r, x, x1, x2, y, y1, y2, nwd;
 
     public void euklideanAlgoritm(BigInteger nwd_a, BigInteger nwd_b){
-        initializeA_B(nwd_a,nwd_b);
+        this.nwd_a = nwd_a;
+        this.nwd_b = nwd_b;
+
+        initializeA_B();
         initializeNWD();
         initializeX_Y();
         core();
-        presentResults(nwd_a,nwd_b);
+        presentResults();
     }
 
     private void core() {
@@ -38,7 +42,7 @@ public class EuclideanAlgoritm {
         return temp2;
     }
 
-    private void initializeA_B(BigInteger nwd_a, BigInteger nwd_b) {
+    private void initializeA_B() {
         if(nwd_b.compareTo(nwd_a) > 0){
             b = new BigInteger(nwd_a.toString());
             a = new BigInteger(nwd_b.toString());
@@ -74,11 +78,21 @@ public class EuclideanAlgoritm {
         return y2.subtract(temp2);
     }
 
-    private void presentResults(BigInteger nwd_a, BigInteger nwd_b) {
+    public BigInteger getY() {
+        return y;
+    }
+
+    public BigInteger getNwd_b(){
+        return nwd_b;
+    }
+
+    private void presentResults() {
         System.out.println("NWD("+nwd_a+", "+nwd_b+") = "+nwd+" = "+x+" * "+nwd_a+" + "+y+" * "+nwd_b);
 
         if (nwd.equals(2))
             System.out.println(nwd_b+" * "+y+" mod "+nwd_a+" = 1");
     }
+
+
 }
 
