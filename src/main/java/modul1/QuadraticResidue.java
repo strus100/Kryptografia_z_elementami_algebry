@@ -3,9 +3,10 @@ package modul1;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+//Zadanie 4
 public class QuadraticResidue {
 
-    public BigDecimal quadraticResidue(BigInteger primeNumber, BigInteger testedNumber){
+    BigDecimal quadraticResidue(BigInteger primeNumber, BigInteger testedNumber){
 
         BigInteger power = primeNumber.subtract(BigInteger.ONE);
         power = power.divide(BigInteger.TWO);

@@ -3,6 +3,7 @@ package modul1;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+//Zadanie 3
 public class FastPower
 {
     public static BigDecimal bit_pow(BigDecimal base, BigInteger power) {

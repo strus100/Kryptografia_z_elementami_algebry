@@ -2,7 +2,7 @@ package modul1;
 
 import java.math.BigInteger;
 import java.util.Random;
-
+//Zadanie 1
 public class Arithmetic {
     public BigInteger randZn(int k){
         BigInteger maxLimit = new BigInteger(maxLimit(k));
@@ -12,12 +12,10 @@ public class Arithmetic {
         int len = maxLimit.bitLength();
         BigInteger res = new BigInteger(len, randNum);
         if (res.compareTo(minLimit) < 0) {
-            //res = minLimit;
-                        res = res.add(minLimit);
+            res = res.add(minLimit);
         }
 
         if (res.compareTo(maxLimit) >= 0) {
-//            res = maxLimit;
             res = randZn(k);
         }
         return res;

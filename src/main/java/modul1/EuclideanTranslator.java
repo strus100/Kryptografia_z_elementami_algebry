@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+//Zadanie2
 public class EuclideanTranslator {
 
     public BigInteger translate(BigInteger y, BigInteger lastElement) {

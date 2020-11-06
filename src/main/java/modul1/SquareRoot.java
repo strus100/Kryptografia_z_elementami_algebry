@@ -3,6 +3,7 @@ package modul1;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
+//Zadanie 6
 public class SquareRoot {
 
     public BigDecimal[] squareRoot(BigDecimal bigDecimal, BigInteger modulo){
