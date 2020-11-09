@@ -7,6 +7,7 @@ import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Zadanie1
 class ArithmeticTest {
 
     @Test

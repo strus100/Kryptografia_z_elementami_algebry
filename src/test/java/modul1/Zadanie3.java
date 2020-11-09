@@ -14,7 +14,6 @@ class FastPowerTest {
         assertEquals(BigDecimal.valueOf(4),FastPower.bit_pow(BigDecimal.valueOf(2), BigInteger.valueOf(2)));
     }
 
-
     @Test
     public void PowerShouldReturn10x10pow1000(){
         assertEquals(1001,FastPower.bit_pow(BigDecimal.valueOf(10), BigInteger.valueOf(1000)).toString().length());
@@ -26,8 +25,4 @@ class FastPowerTest {
     }
 
 
-    @Test
-    public void PowerMaxLen(){
-        assertEquals(2147483647,FastPower.bit_pow(BigDecimal.valueOf(10), BigInteger.valueOf(2147483646)).toString().length());
-    }
 }
