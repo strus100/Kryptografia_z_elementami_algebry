@@ -1,7 +1,7 @@
 package modul1;
 
 import java.math.BigInteger;
-
+//Część zadania 2
 public class EuclideanAlgoritm {
     BigInteger nwd_b, nwd_a;
     BigInteger a, b, q, r, x, x1, x2, y, y1, y2, nwd;

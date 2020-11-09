@@ -6,16 +6,16 @@ import java.math.BigInteger;
 //Zadanie 4
 public class QuadraticResidue {
 
-    BigDecimal quadraticResidue(BigInteger primeNumber, BigInteger testedNumber){
+    public BigDecimal quadraticResidue(BigDecimal testedNumber, BigInteger primeNumber){
 
         BigInteger power = primeNumber.subtract(BigInteger.ONE);
         power = power.divide(BigInteger.TWO);
 
-        return FastPower.bit_pow(new BigDecimal( testedNumber ), power)
+        return FastPower.bit_pow(testedNumber , power)
                 .remainder(new BigDecimal( primeNumber ));
     }
 
-    public boolean isQuadraticResidue(BigInteger primeNumber, BigInteger testedNumber){
+    public boolean isQuadraticResidue(BigDecimal primeNumber, BigInteger testedNumber){
         if(testedNumber.equals(BigInteger.ZERO)){
             return true;
         }

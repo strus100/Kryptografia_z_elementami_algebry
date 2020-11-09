@@ -7,7 +7,7 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class FastPowerTest {
+class Zadanie3 {
 
     @Test
     public void PowerShouldReturn4(){

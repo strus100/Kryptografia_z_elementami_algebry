@@ -5,11 +5,19 @@ import java.math.BigInteger;
 
 //Zadanie 6
 public class FermatTest {
-    public BigDecimal fermatTest(BigInteger b, BigInteger n){
+    BigDecimal fermatTest(BigDecimal b, BigInteger n){
         return FastPower.bit_pow(
-                new BigDecimal( b ),
+                 b ,
                 n.subtract( BigInteger.valueOf( 1 ) )
         )
                 .remainder( new BigDecimal( n ) );
     }
+
+   public boolean isTrue(BigDecimal b, BigInteger n){
+        if(fermatTest(b, n).intValue() == 1){
+            return true;
+        } else {
+            return false;
+        }
+   }
 }
