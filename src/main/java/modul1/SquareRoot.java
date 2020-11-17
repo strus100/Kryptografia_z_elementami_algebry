@@ -11,13 +11,13 @@ public class SquareRoot {
         quadraticResidue = new QuadraticResidue();
     }
 
-    public BigDecimal squareRoot(BigDecimal bigDecimal, BigInteger modulo){
+    public BigInteger squareRoot(BigInteger bigDecimal, BigInteger modulo){
        if( quadraticResidue.isQuadraticResidue(bigDecimal,modulo) ){
            BigInteger power = modulo.add(BigInteger.valueOf(1))
                    .divide(BigInteger.valueOf(4));
-           BigDecimal value = FastPower.bit_pow(bigDecimal, power);
+           BigInteger value = FastPower.bit_pow( bigDecimal ,power, modulo );
 
-           return value.remainder(new BigDecimal( modulo ) );
+           return value.remainder( modulo );
        }
         throw new IllegalArgumentException("");
     }

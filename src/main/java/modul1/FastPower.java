@@ -6,16 +6,21 @@ import java.math.BigInteger;
 //Zadanie 3
 public class FastPower
 {
-    public static BigDecimal bit_pow(BigDecimal base, BigInteger power) {
-        BigDecimal res = BigDecimal.ONE;
+    public static BigInteger bit_pow(BigInteger x, BigInteger k, BigInteger n) {
+       BigInteger y = BigInteger.ONE ;
+       int i = k.bitLength() - 1;
 
-        while (power.compareTo(BigInteger.ZERO) > 0) {
-            BigInteger i = power.and(BigInteger.ONE);
-            if (!i.equals(BigInteger.ZERO))
-                res = res.multiply(base);
-            base = base.multiply(base);
-            power = power.shiftRight(1);
-            }
-        return res;
+       while (i >= 0){
+           y = y.multiply(y).remainder(n);
+           if(k.testBit(i)){
+               y = y.multiply(x).remainder(n);
+           }
+           i--;
+       }
+
+       return y;
     }
+
+
 }
+

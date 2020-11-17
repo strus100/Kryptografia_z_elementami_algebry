@@ -28,4 +28,14 @@ public class EuclideanTranslator {
        return IntStream.range(0, keys.size()).boxed()
                 .collect(Collectors.toMap(keys::get, values::get));
     }
+
+    public BigInteger testMet(BigInteger y, BigInteger lastElement){
+        if(y.compareTo(BigInteger.ZERO) <= 0){
+            return lastElement.add(y);
+        } else {
+            return y;
+        }
+
+    }
+
 }

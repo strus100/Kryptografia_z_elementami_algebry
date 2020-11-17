@@ -14,12 +14,12 @@ public class EuclideanAlgoritm {
         initializeNWD();
         initializeX_Y();
         core();
-        presentResults();
+      //  presentResults();
     }
 
     private void core() {
        while (r.compareTo(BigInteger.ZERO) != 0){
-           System.out.println("a:" + a+", b:" + b+", q:" + q+", r:" + r+", x:"+  x+", x1:"+ x1+", x2:"+ x2+", y:"+ y+", y1:"+ y1+", y2:"+ y2+", nwd:"+ nwd+", " + "");
+       //    System.out.println("a:" + a+", b:" + b+", q:" + q+", r:" + r+", x:"+  x+", x1:"+ x1+", x2:"+ x2+", y:"+ y+", y1:"+ y1+", y2:"+ y2+", nwd:"+ nwd+", " + "");
         a = new BigInteger(b.toString());
         b = new BigInteger(r.toString());
 
