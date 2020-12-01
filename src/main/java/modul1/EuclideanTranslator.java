@@ -30,12 +30,10 @@ public class EuclideanTranslator {
     }
 
     public BigInteger testMet(BigInteger y, BigInteger lastElement){
-        if(y.compareTo(BigInteger.ZERO) <= 0){
-            return lastElement.add(y);
-        } else {
-            return y;
+        while (y.compareTo(BigInteger.ZERO) <= 0){
+            y = lastElement.add(y);
         }
-
+            return y;
     }
 
 }

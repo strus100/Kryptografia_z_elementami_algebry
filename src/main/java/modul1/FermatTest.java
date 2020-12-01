@@ -9,12 +9,16 @@ public class FermatTest {
     public boolean isPrimaryNumber(int b, BigInteger n){
         ArrayList<Boolean> boolsList = new ArrayList<>();
 
-        for (int i = 2; i <= b ; i++) {
+       for (int i = 2; i <= b + 2 ; i++) {
             boolsList.add( isTrue(BigInteger.valueOf( i ),n) );
         }
 
         final boolean bool = boolsList.stream().anyMatch( x -> x == true );
         return bool;
+    }
+
+    public boolean isRelativelyPrime( BigInteger numberOne, BigInteger numberTwo ){
+       return isTrue(numberOne, numberTwo);
     }
 
     private BigInteger fermatTest(BigInteger b, BigInteger n){
