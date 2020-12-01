@@ -39,7 +39,13 @@ public class Module1Fasade {
 
     public BigInteger randPrime(int k) {
         Arithmetic a = new Arithmetic();
-        return a.randProbablePrime(k);
+        BigInteger p;
+
+        do{
+            p = a.randProbablePrime(k);
+        } while (!isPrimary(p));
+
+        return p;
     }
 
     public BigInteger fastRandPrime(int k) {
@@ -47,7 +53,7 @@ public class Module1Fasade {
 
         do{
             p = rand(k);
-        } while (isPrimary(p));
+        } while (!isPrimary(p));
 
         return p;
     }

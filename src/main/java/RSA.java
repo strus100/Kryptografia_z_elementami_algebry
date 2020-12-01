@@ -51,13 +51,25 @@ public class RSA {
         return module1Fasade.bit_pow(C,d,n);
     }
 
+    public BigInteger decryptCRT(BigInteger C){
+        BigInteger u = module1Fasade.reverse(p, q);
+        BigInteger C_p = C.remainder(p);
+        BigInteger C_q = C.remainder(q);
+        BigInteger d_p = d.remainder(p_1);
+        BigInteger d_q = d.remainder(q_1);
+        BigInteger M_p = module1Fasade.bit_pow(C_p, d_p, p);
+        BigInteger M_q = module1Fasade.bit_pow(C_q, d_q, q);
+
+        return M_p.add(p.multiply(M_q.subtract(M_p).multiply(u))).remainder(n);
+    }
+
     private void  randP_Q(){
 
         p = module1Fasade.randPrime(k);
-        System.out.println(p);
+//        System.out.println(p);
 
         q = module1Fasade.randPrime(k);
-        System.out.println(q);
+//        System.out.println(q);
     }
 
     private void fastRandP_Q(){
@@ -84,7 +96,6 @@ public class RSA {
         BigInteger l = p_1.max(q_1);
 
         e = l.nextProbablePrime();
-
 //        System.out.println(e);
     }
 
@@ -109,4 +120,5 @@ public class RSA {
 
         return key;
     }
+
 }

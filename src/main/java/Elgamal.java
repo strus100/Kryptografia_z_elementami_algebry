@@ -14,10 +14,9 @@ public class Elgamal {
     BigInteger c2;
 
 
-    private void bob() {
+    private void bob(int message) {
         Module1Fasade module1Fasade = new Module1Fasade();
 
-        int message = 10000;
         BigInteger z = module1Fasade.rand(10);
 
         c1 = module1Fasade.bit_pow(g, z, p);
@@ -35,8 +34,7 @@ public class Elgamal {
         System.out.println(message);
     }
 
-    void algOne(){
-        int k = 2500;
+    void algOne( int k, int message ){
         Module1Fasade module1Fasade = new Module1Fasade();
 
         do{
@@ -54,6 +52,8 @@ public class Elgamal {
         y = module1Fasade.bit_pow(g, x, p);
         //System.out.println(p + "\n" + g + "\n" + x+ "\n" + y);
 
+        bob( message );
+        alice();
     }
 
     ArrayList publicKey(){
