@@ -40,4 +40,8 @@ public class Arithmetic {
         }
         return min;
     }
+
+    public BigInteger randProbablePrime(int k) {
+        return BigInteger.probablePrime( k, new Random() );
+    }
 }

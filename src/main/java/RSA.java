@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class RSA {
-    int k = 1000;
+    int k;
     Module1Fasade module1Fasade = new Module1Fasade();
 
     BigInteger p;
@@ -19,12 +19,18 @@ public class RSA {
 
     BigInteger n;
 
-    public RSA() {
-        createNewRSA();
+    public RSA(int k) {
+        this.k = k;
+        createNewRSA(0);
     }
 
-    public void  createNewRSA(){
-        randP_Q();
+    public void  createNewRSA(int mode){
+        if (mode == 0){
+            randP_Q();
+        } else {
+            fastRandP_Q();
+        }
+
         //fakeP_Q();
         calculateR_Fin();
         findE();
@@ -48,10 +54,18 @@ public class RSA {
     private void  randP_Q(){
 
         p = module1Fasade.randPrime(k);
-        q = p.nextProbablePrime();
+        System.out.println(p);
 
-//        System.out.println(p);
-//        System.out.println(q);
+        q = module1Fasade.randPrime(k);
+        System.out.println(q);
+    }
+
+    private void fastRandP_Q(){
+        p = module1Fasade.fastRandPrime(k);
+        System.out.println(p);
+
+        q = module1Fasade.fastRandPrime(k);
+        System.out.println(q);
     }
 
     private void calculateR_Fin(){

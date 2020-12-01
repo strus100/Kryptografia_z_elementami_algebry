@@ -1,6 +1,7 @@
 package modul1;
 
 import java.math.BigInteger;
+import java.util.Random;
 
 public class Module1Fasade {
     public BigInteger rand(int k) {
@@ -37,13 +38,18 @@ public class Module1Fasade {
     }
 
     public BigInteger randPrime(int k) {
-        BigInteger p = rand(k);
-/*
+        Arithmetic a = new Arithmetic();
+        return a.randProbablePrime(k);
+    }
+
+    public BigInteger fastRandPrime(int k) {
+        BigInteger p;
+
         do{
             p = rand(k);
         } while (isPrimary(p));
 
-        return p;*/
-        return p.nextProbablePrime();
+        return p;
     }
+
 }
