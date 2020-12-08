@@ -1,12 +1,21 @@
 package modul1;
 
 import java.math.BigInteger;
-import java.util.Random;
 
 public class Module1Fasade {
+    public BigInteger quadratic(BigInteger a, BigInteger p ){
+        QuadraticResidue quadraticResidue = new QuadraticResidue();
+        return quadraticResidue.quadraticResidue( a, p );
+    }
+
     public BigInteger rand(int k) {
         Arithmetic a = new Arithmetic();
         return a.randZn(k);
+    }
+
+    public BigInteger randWithMaxLimit(int k) {
+        Arithmetic a = new Arithmetic();
+        return a.randZnWithMaxLimit(k);
     }
 
     public boolean isPrimary(BigInteger q) {
@@ -31,8 +40,13 @@ public class Module1Fasade {
         return translator.testMet(algoritm.getY(),p);
     }
 
+    public BigInteger counter(BigInteger x, BigInteger p){
+        EuclideanTranslator translator = new EuclideanTranslator();
+        return translator.testMet( x, p );
+
+    }
+
     public BigInteger countOneModN(BigInteger bigDecimal, BigInteger modulo){
-        //x = 1(mod n)
         SquareRoot squareRoot = new SquareRoot();
         return squareRoot.squareRoot(bigDecimal, modulo);
     }
@@ -45,6 +59,13 @@ public class Module1Fasade {
             p = a.randProbablePrime(k);
         } while (!isPrimary(p));
 
+        return p;
+    }
+
+    public BigInteger randPrimeKBits(int k) {
+        Arithmetic a = new Arithmetic();
+        BigInteger p;
+        p = a.randProbablePrimeKBits(k);
         return p;
     }
 

@@ -21,6 +21,23 @@ public class Arithmetic {
         return res;
     }
 
+    public BigInteger randZnWithMaxLimit(int k){
+        BigInteger maxLimit = new BigInteger(maxLimit(k));
+        BigInteger minLimit = new BigInteger("0");
+        Random randNum = new Random();
+
+        int len = maxLimit.bitLength();
+        BigInteger res = new BigInteger(len, randNum);
+        if (res.compareTo(minLimit) < 0) {
+            res = res.add(minLimit);
+        }
+
+        if (res.compareTo(maxLimit) >= 0) {
+            res = randZn(k);
+        }
+        return res;
+    }
+
     private String maxLimit(int k){
         String max = "";
         for (int i = 0; i < k; i++) {
@@ -43,5 +60,9 @@ public class Arithmetic {
 
     public BigInteger randProbablePrime(int k) {
         return BigInteger.probablePrime( k, new Random() );
+    }
+
+    public BigInteger randProbablePrimeKBits(int k) {
+        return BigInteger.probablePrime( randZn(k).bitLength(), new Random() );
     }
 }
