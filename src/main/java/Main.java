@@ -1,4 +1,5 @@
 import modul1.*;
+import modul2.CurvePoint;
 import modul2.EllipseCurve;
 
 import java.math.BigInteger;
@@ -8,9 +9,60 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws NoSuchAlgorithmException {
-        Module1Fasade module1Fasade = new Module1Fasade();
 
-        EllipseCurve ellipseCurve = new EllipseCurve(300);
+        for (int i = 0; i <= 683; i++) {
+            BigInteger x = BigInteger.valueOf(421).multiply(BigInteger.valueOf(i)).remainder( BigInteger.valueOf( 683 ));
+
+            if(x.compareTo( BigInteger.ONE ) == 0 ) {
+                System.out.println(i);
+            }
+        }
+        /*
+
+//        for (int i = 301; i < 10000 ; i++) {
+            long startTime = System.nanoTime();
+
+
+            System.out.println("+++++++++++++++++++++ ");
+//            System.out.println( 300 );
+
+
+        EllipseCurve ellipseCurve = new EllipseCurve( 3 );
+
+        CurvePoint p = ellipseCurve.generatePointInCurve();
+        CurvePoint q = ellipseCurve.generatePointInCurve();
+
+        ellipseCurve.isPointInCurve( p );
+        ellipseCurve.isPointInCurve( q );
+
+
+        CurvePoint w1 = ellipseCurve.add( p , q );
+        CurvePoint w2  = ellipseCurve.add( p );
+
+        if( !ellipseCurve.isPointInCurve( w1 ) ) {
+            System.out.println("p+q");
+            System.out.println( ellipseCurve.toString() );
+
+            System.out.println( p.toString() );
+            System.out.println( q.toString() );
+            System.out.println( w1.toString() );
+        }
+
+         if( !ellipseCurve.isPointInCurve( w2 ) ) {
+             System.out.println("p+p");
+             System.out.println( ellipseCurve.toString() );
+             System.out.println( p.toString() );
+             System.out.println( w2.toString() );
+         }
+
+
+            System.out.println("Done");
+
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime) /1000000000;
+        System.out.println("Time of execution: " + duration + " seconds.");
+/*
+//        }
 
         //
 //

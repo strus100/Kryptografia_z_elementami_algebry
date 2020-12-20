@@ -30,7 +30,7 @@ public class EuclideanTranslator {
     }
 
     public BigInteger testMet(BigInteger y, BigInteger lastElement){
-        while (y.compareTo(BigInteger.ZERO) <= 0){
+        while (y.compareTo(BigInteger.ZERO) < 0){
             y = lastElement.add(y);
         }
             return y;

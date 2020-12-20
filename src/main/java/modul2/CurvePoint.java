@@ -1,11 +1,9 @@
 package modul2;
 
-import lombok.Getter;
 
 import java.math.BigInteger;
 import java.util.Objects;
 
-@Getter
 public class CurvePoint {
 
     private BigInteger x;
@@ -29,5 +27,29 @@ public class CurvePoint {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public BigInteger getX() {
+        return x;
+    }
+
+    public BigInteger getY() {
+        return y;
+    }
+
+
+    @Override
+    public String toString() {
+        return "new CurvePoint( " +
+                "new BigInteger( " + x +
+                " ), new BigInteger( " + y +
+                ") );";
+    }
+
+    public boolean isSamePoint(CurvePoint q) {
+        boolean boolX = getX().compareTo(q.getX()) == 0;
+        boolean boolY = getY().compareTo(q.getY()) == 0;
+
+        return boolX && boolY;
     }
 }

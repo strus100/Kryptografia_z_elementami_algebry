@@ -11,8 +11,13 @@ public class EllipseCurve {
 
     BigInteger A;
     BigInteger B;
-    BigInteger p;
 
+    public BigInteger getP() {
+        return p;
+    }
+
+    BigInteger p;
+    BigInteger lambdaToTest;
 
     public EllipseCurve( BigInteger A, BigInteger B, BigInteger p ){
         this.A = A;
@@ -28,24 +33,42 @@ public class EllipseCurve {
         A = module1Fasade.randWithMaxLimit( p.toString().length() - 1 );
         B = module1Fasade.randWithMaxLimit( p.toString().length() - 1 );
         while ( !isElipseCurve() ){
-           B = B.add(BigInteger.ONE);
+           B = module1Fasade.randWithMaxLimit( p.toString().length() - 1 );
         }
-        System.out.println("DONE");
+    }
+
+    @Override
+    public String toString() {
+        return "new EllipseCurve( " +
+                "new BigInteger( " + A +
+                " ), new BigInteger( " + B +
+                " ), new BigInteger( " + p +
+                " ) );";
     }
 
     public CurvePoint generatePointInCurve(){
-        BigInteger x = module1Fasade.randWithMaxLimit(p.toString().length() - 1);
-        BigInteger f_x = countF_x(x);
-        isXGood(f_x);
-        BigInteger y = module1Fasade.countOneModN(f_x, p);
+        BigInteger x;
+        BigInteger f_x;
+        BigInteger y;
+        do {
+
+            do{
+                x = module1Fasade.randWithMaxLimit( p.toString().length() - 1 );
+                f_x = countF_x(x);
+            } while ( !isXGood(f_x) );
+
+            y = module1Fasade.sqrt(f_x, p);
+        }
+        while( !isYGood( y,f_x ) );
+
         return new CurvePoint( x, y );
     }
 
     public CurvePoint generateCounterPoint( CurvePoint point ){
-        return new CurvePoint( point.getX(), module1Fasade.counter( point.getY(), p) );
+        return new CurvePoint( point.getX(), module1Fasade.counter( point.getY().multiply( BigInteger.valueOf( -1 ) ), p) );
     }
 
-    public boolean isElipseCurve(){
+    boolean isElipseCurve(){
         return ( countDelta() != BigInteger.ZERO ) && ( A.compareTo(p) == -1 ) && ( B.compareTo(p) == -1 );
     }
 
@@ -57,38 +80,59 @@ public class EllipseCurve {
 
     public CurvePoint add( CurvePoint point , CurvePoint q ){
 
-        BigInteger lambdaOne = q.getY().subtract( point.getY() );
-        BigInteger lambdaTwo = module1Fasade.reverse( q.getX().subtract( point.getX() ), p );
-        BigInteger lambda = lambdaOne.multiply(lambdaTwo).remainder(p);
+        if( point.equals( q ) ){
+            return add( point );
+        }
 
-        BigInteger x = module1Fasade
-                .bit_pow(lambda, BigInteger.TWO, p)
-                .subtract(point.getX())
-                .subtract(q.getX())
-                .remainder(p);
+        CurvePoint counterPoint = generateCounterPoint(point);
+        if( counterPoint.isSamePoint( q ) ){
+            return null;
+        }
 
-        BigInteger y = point.getX()
-                .subtract(x)
-                .multiply(lambda)
-                .subtract(point.getY())
-                .remainder(p);
+            BigInteger lambdaOne = q.getY().subtract(point.getY());
+            lambdaOne = module1Fasade.translate( lambdaOne, p );
 
+            BigInteger lambdaToReverse = module1Fasade.translate( q.getX().subtract( point.getX() ), p );
+            BigInteger lambdaTwo = module1Fasade.reverse( lambdaToReverse, p);
+            BigInteger lambda = lambdaOne.multiply(lambdaTwo).remainder(p);
+            lambda = module1Fasade.translate( lambda, p );
 
-        return new CurvePoint( x, y );
+            lambdaToTest = lambda;
+
+            BigInteger x = module1Fasade
+                    .bit_pow(lambda, BigInteger.TWO, p)
+                    .subtract(point.getX())
+                    .subtract(q.getX())
+                    .remainder(p);
+
+            BigInteger translatedX = module1Fasade.translate(x, p);
+
+            BigInteger y = point.getX();
+            y = y.subtract(translatedX);
+            y = y.multiply(lambda);
+            y = y.subtract(point.getY());
+            y = y.remainder(p);
+
+            BigInteger translatedY = module1Fasade.translate(y, p);
+
+            return new CurvePoint( translatedX, translatedY );
+
     }
 
     public CurvePoint add( CurvePoint point ){
-        BigInteger lambdaOne = module1Fasade
-                .bit_pow(point.getX(), BigInteger.TWO, p)
-                .multiply(BigInteger.valueOf(3))
-                .add(A);
+        BigInteger lambdaOne = module1Fasade.bit_pow(point.getX(), BigInteger.TWO, p);
+        lambdaOne = lambdaOne.multiply(BigInteger.valueOf(3));
+        lambdaOne = lambdaOne.add(A);
+        lambdaOne = lambdaOne.remainder( p );
 
-        BigInteger lambdaTwo = module1Fasade
-                .reverse(point.getY()
-                        .multiply(BigInteger.TWO), p)
-                .remainder(p); //This is probably unnessary
+        BigInteger lambdaTwo = point.getY().multiply(BigInteger.TWO);
+        lambdaTwo = lambdaTwo.remainder( p );
+        lambdaTwo = module1Fasade.reverse( lambdaTwo , p);
+        lambdaTwo = lambdaTwo.remainder(p); //This is probably unnessary
 
         BigInteger lambda = lambdaOne.multiply(lambdaTwo).remainder(p);
+
+        lambdaToTest = lambda;
 
         BigInteger x = module1Fasade
                 .bit_pow(lambda, BigInteger.TWO, p)
@@ -96,20 +140,24 @@ public class EllipseCurve {
                         .multiply(BigInteger.TWO))
                 .remainder(p);
 
-        BigInteger y = point.getX()
-                .subtract(x)
-                .multiply(lambda)
-                .subtract(point.getY())
-                .remainder(p);
+        BigInteger translatedX = module1Fasade.translate( x, p );
 
-        return new CurvePoint( x, y );
+        BigInteger y = point.getX();
+        y = y.subtract( translatedX );
+        y = y.multiply(lambda);
+        y = y.subtract(point.getY());
+        y = y.remainder(p);
+
+        BigInteger translatedY = module1Fasade.translate( y, p );
+
+        return new CurvePoint( translatedX, translatedY );
     }
 
-    public CurvePoint addWhenQEqualsMinusP( CurvePoint point , CurvePoint q ){
-        if ( !q.equals( generateCounterPoint( point ) ) ){
-            add( point, q );
+    boolean addWhenQEqualsMinusP(CurvePoint point , CurvePoint q ){
+        if ( !q.equals(  point  ) ){
+            return true;
         }
-        return null;
+        return false;
     }
 
     private boolean isCongruent(){
@@ -117,7 +165,7 @@ public class EllipseCurve {
        return test.compareTo( BigInteger.valueOf( 3 ) ) == 0 ;
     }
 
-    private BigInteger countDelta(){
+    BigInteger countDelta(){
         BigInteger tempA = module1Fasade.bit_pow( A, BigInteger.valueOf( 3 ), p );
         tempA = tempA.multiply( BigInteger.valueOf( 4 ));
         BigInteger tempB = module1Fasade.bit_pow( B, BigInteger.valueOf( 2 ), p );
@@ -128,18 +176,20 @@ public class EllipseCurve {
         return counted;
     }
 
-
-    private boolean isXGood( BigInteger f_x ){
-        return module1Fasade.quadratic( f_x, p ) != BigInteger.valueOf( -1 );
+    boolean isXGood( BigInteger f_x ){
+        BigInteger quad = module1Fasade.quadratic(f_x, p);
+        boolean bool = quad.compareTo(BigInteger.valueOf(-1)) != 0;
+        return bool;
     }
 
-    private boolean isYGood( BigInteger y, BigInteger f_x ){
-        BigInteger tempY = module1Fasade.countOneModN(f_x, p);
+    boolean isYGood( BigInteger y, BigInteger f_x ){
+        BigInteger tempY = module1Fasade.bit_pow( y, BigInteger.TWO, p );
+        //BigInteger tempY = module1Fasade.countOneModN(y, p);
 
-        return tempY.compareTo( y ) == 0;
+        return tempY.compareTo( f_x ) == 0;
     }
 
-    private BigInteger countF_x(BigInteger x){
+    public BigInteger countF_x(BigInteger x){
        BigInteger f_x = module1Fasade
                .bit_pow(x, BigInteger.valueOf(3), p)
                .add(A.multiply(x))
@@ -148,5 +198,28 @@ public class EllipseCurve {
 
        return f_x;
    }
+
+   //nP
+   public CurvePoint power( CurvePoint point, BigInteger n ){
+        CurvePoint q = point;
+        CurvePoint r = null;
+        while( n.compareTo( BigInteger.ZERO ) > 0) {
+            if( n.remainder( BigInteger.TWO )
+                    .compareTo( BigInteger.ONE ) == 0 )
+            {
+                if( r != null ){
+                    r = add( r, q );
+                    n = n.subtract( BigInteger.ONE );
+                } else {
+                    r = q;
+                }
+            } else {
+                q = add( q );
+            }
+                n = n.divide( BigInteger.TWO );
+        }
+        return r;
+   }
+
 
 }

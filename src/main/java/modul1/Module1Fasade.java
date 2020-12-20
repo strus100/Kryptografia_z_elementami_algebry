@@ -3,9 +3,16 @@ package modul1;
 import java.math.BigInteger;
 
 public class Module1Fasade {
-    public BigInteger quadratic(BigInteger a, BigInteger p ){
+
+    public BigInteger sqrt(BigInteger a, BigInteger p ){
         QuadraticResidue quadraticResidue = new QuadraticResidue();
-        return quadraticResidue.quadraticResidue( a, p );
+        SquareRoot squareRoot = new SquareRoot();
+        BigInteger result = squareRoot.squareRootWitoutTest(a, p);
+
+        if( quadraticResidue.isQuadraticResidue( result, p ) ){
+            return result;
+        }
+        return BigInteger.valueOf(-1);
     }
 
     public BigInteger rand(int k) {
@@ -40,15 +47,16 @@ public class Module1Fasade {
         return translator.testMet(algoritm.getY(),p);
     }
 
-    public BigInteger counter(BigInteger x, BigInteger p){
+    public BigInteger translate(BigInteger c1, BigInteger p) {
+        EuclideanTranslator translator = new EuclideanTranslator();
+
+        return translator.testMet( c1, p );
+    }
+
+        public BigInteger counter(BigInteger x, BigInteger p){
         EuclideanTranslator translator = new EuclideanTranslator();
         return translator.testMet( x, p );
 
-    }
-
-    public BigInteger countOneModN(BigInteger bigDecimal, BigInteger modulo){
-        SquareRoot squareRoot = new SquareRoot();
-        return squareRoot.squareRoot(bigDecimal, modulo);
     }
 
     public BigInteger randPrime(int k) {
@@ -79,4 +87,15 @@ public class Module1Fasade {
         return p;
     }
 
+    public BigInteger quadratic(BigInteger f_x, BigInteger p) {
+        QuadraticResidue quadraticResidue = new QuadraticResidue();
+        return quadraticResidue.quadraticResidue( f_x, p );
+    }
+
+
+    public boolean isQuadratic(BigInteger valueOf, BigInteger valueOf1) {
+        QuadraticResidue quadraticResidue = new QuadraticResidue();
+
+        return quadraticResidue.isQuadraticResidue(valueOf, valueOf1);
+    }
 }

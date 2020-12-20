@@ -55,6 +55,7 @@ public class EuclideanAlgoritm {
     private void calculateQR(){
         q = a.divide(b);
         r = a.mod(b);
+    //    r = a.remainder(b);
     }
 
     private void initializeNWD() {
