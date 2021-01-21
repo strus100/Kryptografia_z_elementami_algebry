@@ -20,6 +20,11 @@ public class Module1Fasade {
         return a.randZn(k);
     }
 
+    public BigInteger randInRange( BigInteger max ){
+        Arithmetic a = new Arithmetic();
+
+       return a.randInRange( max );
+    }
     public BigInteger randWithMaxLimit(int k) {
         Arithmetic a = new Arithmetic();
         return a.randZnWithMaxLimit(k);
@@ -40,11 +45,16 @@ public class Module1Fasade {
     }
 
     public BigInteger reverse(BigInteger c1, BigInteger p) {
-        EuclideanTranslator translator = new EuclideanTranslator();
-        EuclideanAlgoritm algoritm = new EuclideanAlgoritm();
-        algoritm.euklideanAlgoritm( p, c1 );
+//        if(c1.compareTo( BigInteger.ZERO ) == 0)
+//        {
+            EuclideanTranslator translator = new EuclideanTranslator();
+            EuclideanAlgoritm algoritm = new EuclideanAlgoritm();
+            algoritm.euklideanAlgoritm( p, c1 );
 
-        return translator.testMet(algoritm.getY(),p);
+            return translator.testMet(algoritm.getY(),p);
+//        } else {
+//            return p;
+//        }
     }
 
     public BigInteger translate(BigInteger c1, BigInteger p) {

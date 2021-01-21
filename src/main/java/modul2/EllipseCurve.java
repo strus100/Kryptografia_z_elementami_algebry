@@ -9,14 +9,22 @@ public class EllipseCurve {
 
     Module1Fasade module1Fasade = new Module1Fasade();
 
-    BigInteger A;
-    BigInteger B;
+    public BigInteger A;
+    public BigInteger B;
+
+    public BigInteger getA() {
+        return A;
+    }
+
+    public BigInteger getB() {
+        return B;
+    }
 
     public BigInteger getP() {
         return p;
     }
 
-    BigInteger p;
+    public BigInteger p;
     BigInteger lambdaToTest;
 
     public EllipseCurve( BigInteger A, BigInteger B, BigInteger p ){
@@ -80,6 +88,10 @@ public class EllipseCurve {
 
     public CurvePoint add( CurvePoint point , CurvePoint q ){
 
+        if( point == null || q == null ){
+            return null;
+        }
+
         if( point.equals( q ) ){
             return add( point );
         }
@@ -93,7 +105,12 @@ public class EllipseCurve {
             lambdaOne = module1Fasade.translate( lambdaOne, p );
 
             BigInteger lambdaToReverse = module1Fasade.translate( q.getX().subtract( point.getX() ), p );
-            BigInteger lambdaTwo = module1Fasade.reverse( lambdaToReverse, p);
+            BigInteger lambdaTwo;
+            if(lambdaToReverse.compareTo( BigInteger.ZERO ) != 0) {
+                lambdaTwo = module1Fasade.reverse(lambdaToReverse, p);
+            } else {
+                lambdaTwo = BigInteger.ZERO;
+            }
             BigInteger lambda = lambdaOne.multiply(lambdaTwo).remainder(p);
             lambda = module1Fasade.translate( lambda, p );
 
@@ -200,7 +217,7 @@ public class EllipseCurve {
    }
 
    //nP
-   public CurvePoint power( CurvePoint point, BigInteger n ){
+   public CurvePoint power( CurvePoint point, BigInteger n, String real ){
         CurvePoint q = point;
         CurvePoint r = null;
         while( n.compareTo( BigInteger.ZERO ) > 0) {
@@ -213,13 +230,33 @@ public class EllipseCurve {
                 } else {
                     r = q;
                 }
-            } else {
-                q = add( q );
             }
+                q = add( q );
+
                 n = n.divide( BigInteger.TWO );
         }
         return r;
    }
 
+    public CurvePoint power( CurvePoint point, BigInteger n )
+    {
+        if( n.compareTo( BigInteger.ZERO ) == 0 ){
+            return null;
+        }
 
+        if( n.compareTo( BigInteger.ONE ) == 0 ){
+            return point;
+        }
+
+        BigInteger i = BigInteger.TWO;
+        CurvePoint temp = add( point );
+        while ( n.compareTo( i ) > 0 )
+        {
+            System.out.println( i );
+            i = i.add( BigInteger.ONE );
+            temp = add( temp, point );
+        }
+
+        return temp;
+    }
 }

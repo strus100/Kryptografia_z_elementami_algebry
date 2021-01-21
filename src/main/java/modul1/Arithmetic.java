@@ -21,6 +21,26 @@ public class Arithmetic {
         return res;
     }
 
+    public BigInteger randInRange(BigInteger max){
+        BigInteger min = new BigInteger("1");
+
+        BigInteger bigInteger = max.subtract(min);
+        Random random = new Random();
+        int len = max.bitLength();
+        BigInteger res = new BigInteger( len, random );
+
+        if (res.compareTo( min ) < 0)
+        {
+            res = res.add( min );
+        }
+        if (res.compareTo( bigInteger ) >= 0)
+        {
+            res = res.mod(bigInteger).add(min);
+        }
+
+        return res;
+    }
+
     public BigInteger randZnWithMaxLimit(int k){
         BigInteger maxLimit = new BigInteger(maxLimit(k));
         BigInteger minLimit = new BigInteger("0");

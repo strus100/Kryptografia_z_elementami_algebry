@@ -40,10 +40,8 @@ public class CurvePoint {
 
     @Override
     public String toString() {
-        return "new CurvePoint( " +
-                "new BigInteger( " + x +
-                " ), new BigInteger( " + y +
-                ") );";
+        return "x " + x + '\n' +
+                "y " + y ;
     }
 
     public boolean isSamePoint(CurvePoint q) {

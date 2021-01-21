@@ -12,7 +12,7 @@ public class Key {
     private final EllipseCurve e;
     private final BigInteger p;
     private final CurvePoint point;
-    private final CurvePoint q;
+    CurvePoint q;
     private final BigInteger x;
 
     Key( EllipseCurve aE, BigInteger aP, CurvePoint aPoint, CurvePoint aQ, BigInteger aX ){
@@ -21,6 +21,10 @@ public class Key {
         point = aPoint;
         q = aQ;
         x = aX;
+    }
+
+    public void setQ(CurvePoint q) {
+        this.q = q;
     }
 
     public Key publicKey(){
@@ -66,5 +70,16 @@ public class Key {
     @Override
     public int hashCode() {
         return Objects.hash(e, p, point, q, x);
+    }
+
+    @Override
+    public String toString() {
+        return "Key{" + '\n' +
+                "e=" + e + '\n' +
+                ", p=" + p + '\n' +
+                ", point=" + point + '\n' +
+                ", q=" + q + '\n' +
+                ", x=" + x + '\n' +
+                '}';
     }
 }
